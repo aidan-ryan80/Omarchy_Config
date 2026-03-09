@@ -1,0 +1,6 @@
+brave-bin 1:1.87.192-1
+caffeine-ng 4.2.0-2
+displaylink 6.2-1
+evdi-dkms 1.14.15-1
+rstudio-desktop-bin 2026.01.1.403-1
+tty-clock 2.3-2
