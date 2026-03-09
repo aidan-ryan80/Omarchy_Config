@@ -1,0 +1,4 @@
+# Ignore sensitive files
+.git-credentials
+.ssh/
+*history
