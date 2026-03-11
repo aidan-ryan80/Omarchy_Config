@@ -1,0 +1,17 @@
+sh:home/aidan/.cache
+sh:home/aidan/.local/share/Trash
+sh:home/aidan/.local/share/gvfs-metadata
+sh:home/aidan/.local/share/uv
+sh:home/aidan/.local/share/Steam/steamapps/common
+sh:home/aidan/.local/share/Steam/steamapps/downloading
+sh:home/aidan/.local/share/flatpak
+sh:home/aidan/.config/BraveSoftware/Brave-Browser/Default/Cache
+sh:home/aidan/.config/BraveSoftware/Brave-Browser/Default/Code Cache
+sh:home/aidan/.config/obsidian/Cache
+sh:home/aidan/.config/obsidian/Code Cache
+sh:home/aidan/.config/obsidian/GPUCache
+sh:home/aidan/.thumbnails
+sh:home/aidan/lost+found
+sh:home/aidan/.minecraft/runtime
+sh:home/aidan/.minecraft/libraries
+sh:home/aidan/.minecraft/versions
