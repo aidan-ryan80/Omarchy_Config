@@ -9,6 +9,3 @@ source ~/.local/share/omarchy/default/bash/rc
 #
 # Make an alias for invoking commands you use constantly
 alias py='python'
-
-# Created by `pipx` on 2025-12-01 21:10:12
-export PATH="$PATH:/home/aidan/.local/bin"

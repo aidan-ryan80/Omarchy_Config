@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Path to Lenovo firmware toggle
+STATUS_FILE="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+
+# Check if the file exists (safety check for non-Lenovo hardware)
+if [[ ! -f "$STATUS_FILE" ]]; then
+    echo '{"text": "ERR", "tooltip": "Conservation mode file not found"}'
+    exit 1
+fi
+
+case $1 in
+    "full")
+        echo 0 | sudo tee "$STATUS_FILE"
+        echo "Charging to 100% (Travel Mode)"
+        ;;
+    "safe")
+        echo 1 | sudo tee "$STATUS_FILE"
+        echo "Capping at 60% (Desk Mode)"
+        ;;
+    *)
+        CURRENT=$(cat "$STATUS_FILE")
+        echo "Current Mode: $([ "$CURRENT" == "1" ] && echo "Safe (60%)" || echo "Full (100%)")"
+        echo "Use 'toggle-bat-mode full' or 'toggle-bat-mode safe' to change."
+        ;;
+esac
