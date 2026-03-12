@@ -1,0 +1,16 @@
+#!/bin/bash
+# Fixed the filename to 'conservation_mode'
+FILE="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+
+if [[ ! -f "$FILE" ]]; then
+  echo '{"text": "", "class": "error", "tooltip": "File not found"}'
+  exit 0
+fi
+
+MODE=$(cat "$FILE")
+
+if [[ "$MODE" == "1" ]]; then
+  echo '{"text": "󰁿", "class": "on", "tooltip": "Capped at 60%"}'
+else
+  echo '{"text": "󰁹", "class": "off", "tooltip": "Charge to 100%"}'
+fi
