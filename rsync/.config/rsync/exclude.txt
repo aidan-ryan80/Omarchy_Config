@@ -1,17 +1,18 @@
 .cache/
+Archive/
 .local/share/Trash/
 .local/share/gvfs-metadata/
 .local/share/flatpak/
 .local/share/uv/
 .local/share/Steam/steamapps/common/
 .local/share/Steam/steamapps/downloading/
-.config/BraveSoftware/Brave-Browser/Default/Cache/
-.config/BraveSoftware/Brave-Browser/Default/Code Cache/
+.config/BraveSoftware/
+.config/chromium/
 .config/obsidian/Cache/
 .config/obsidian/Code Cache/
 .config/obsidian/GPUCache/
 .thumbnails/
 lost+found/
-.minecraft/runtime/
-.minecraft/libraries/
-.minecraft/versions/
+.minecraft/
+.npm/
+.ollama/
