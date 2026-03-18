@@ -39,6 +39,7 @@ print_storage_report "Pre-Backup"
 
 # 3. Run Rsync Mirror
 echo "Running Rsync..."
+# Should I use --exclude-if-present .nobackup instead?
 rsync -avAXH --delete --exclude-from="/home/aidan/.config/rsync/exclude.txt" /home/aidan/ /mnt/backup/@mirror/
 
 # 4. Run Borg Backup

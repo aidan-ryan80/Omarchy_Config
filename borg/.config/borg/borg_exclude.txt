@@ -1,4 +1,5 @@
 sh:home/aidan/.cache
+sh:home/aidan/Archive
 sh:home/aidan/.local/share/Trash
 sh:home/aidan/.local/share/gvfs-metadata
 sh:home/aidan/.local/share/uv
