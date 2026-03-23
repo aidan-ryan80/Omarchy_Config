@@ -29,12 +29,15 @@ keybind = super+control+shift+alt+arrow_up=resize_split:up,100
 keybind = super+control+shift+alt+arrow_left=resize_split:left,100
 keybind = super+control+shift+alt+arrow_right=resize_split:right,100
 
-# Not default Omarchy:
+# Not default for Omarchy or Ghostty:
 keybind = ctrl+w=close_surface
 keybind = ctrl+shift+h=new_split:left
+keybind = ctrl+shift+numpad_page_up=move_tab:-1
+keybind = ctrl+shift+numpad_page_down=move_tab:1
+keybind = ctrl+shift+page_up=move_tab:-1
+keybind = ctrl+shift+page_down=move_tab:1
 
 # Rebinding keybindings that don't work on my laptop Keyboard
-# If the above fail, we map the literal sequences you saw in 'cat'
 keybind = shift+numpad_home=scroll_to_top
 keybind = shift+numpad_end=scroll_to_bottom
 keybind = shift+numpad_page_up=scroll_page_up

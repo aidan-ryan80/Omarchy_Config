@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Initialize the Markdown table
+echo -e "| Package | Description |\n| :--- | :--- |" > packages.md
+
+# Combine pacman and yay explicitly installed packages
+# 'awk {print $1}' ensures we only get the name, even if versions are listed
+{ pacman -Qeq; yay -Qeq; } | sort -u | while read -r pkg; do
+    
+    # pacman -Si/Qi can be slow in a loop; -Qii is faster for local lookups
+    desc=$(pacman -Qiq "$pkg" | grep "^Description" | cut -d: -f2- | sed 's/^[ \t]*//')
+    
+    if [ -n "$desc" ]; then
+        echo "| $pkg | $desc |" >> packages.md
+    fi
+done
