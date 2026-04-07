@@ -12,3 +12,13 @@ source ~/.local/share/omarchy/default/bash/rc
 #
 # Make an alias for invoking commands you use constantly
 alias py='python'
+
+# Function for opening markdown files in obsidian in a new tab
+export OBSIDIAN_VAULT="$HOME/Obsidian"
+
+ob() {
+  local file="${1:-.}"
+  local rel
+  rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
+  obsidian open path="$rel" vault="Obsidian" newtab
+}
