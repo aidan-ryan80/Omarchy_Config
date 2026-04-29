@@ -1,5 +1,4 @@
 #!/bin/bash
-# Fixed the filename to 'conservation_mode'
 FILE="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
 
 if [[ ! -f "$FILE" ]]; then
