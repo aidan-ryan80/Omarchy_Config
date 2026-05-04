@@ -42,6 +42,7 @@ keybind = shift+numpad_home=scroll_to_top
 keybind = shift+numpad_end=scroll_to_bottom
 keybind = shift+numpad_page_up=scroll_page_up
 keybind = shift+numpad_page_down=scroll_page_down
+keybind = ctrl+shift+r=prompt_tab_title
 
 # Slowdown mouse scrolling
 mouse-scroll-multiplier = 0.95
