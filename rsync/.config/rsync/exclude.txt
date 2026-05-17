@@ -16,3 +16,4 @@ lost+found/
 .minecraft/
 .npm/
 .ollama/
+.copilot/
