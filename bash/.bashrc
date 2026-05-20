@@ -13,23 +13,25 @@ source ~/.local/share/omarchy/default/bash/rc
 # Make an alias for invoking commands you use constantly
 alias py='python'
 
-# Function for opening markdown files in obsidian from the terminal
-export OBSIDIAN_VAULT="$HOME/Obsidian"
+# Function for opening markdown files in obsidian from the terminal.
+# TODO: Look into fixing these functions. Commented out for now
 
-ob() {
-  local file="${1:-.}"
-  local rel
-  rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
-
-  command obsidian open path="$rel" vault="Obsidian" newtab >/dev/null 2>&1 & disown
-}
-
-ob_new_window() {
-  local file="${1:-}"
-  local rel
-  rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
-
-  command obsidian command id="workspace:new-window" >/dev/null 2>&1
-  sleep 0.12
-  command obsidian open path="$rel" vault="Obsidian" >/dev/null 2>&1 & disown
-}
+# export OBSIDIAN_VAULT="$HOME/Obsidian"
+#
+# ob() {
+#   local file="${1:-.}"
+#   local rel
+#   rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
+#
+#   command obsidian open path="$rel" vault="Obsidian" newtab >/dev/null 2>&1 & disown
+# }
+#
+# ob_new_window() {
+#   local file="${1:-}"
+#   local rel
+#   rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
+#
+#   command obsidian command id="workspace:new-window" >/dev/null 2>&1
+#   sleep 0.12
+#   command obsidian open path="$rel" vault="Obsidian" >/dev/null 2>&1 & disown
+# }

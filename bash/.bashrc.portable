@@ -1,0 +1,206 @@
+# Hybrid .bashrc: Omarchy-aware with portable fallback
+# If not running interactively, don't do anything (leave this at the top)
+[[ $- != *i* ]] && return
+
+# ============================================================================
+# OMARCHY INTEGRATION (if available)
+# ============================================================================
+
+if [ -d "$HOME/.local/share/omarchy/default/bash" ]; then
+    # Use omarchy if available
+    source ~/.local/share/omarchy/default/bash/rc
+else
+    # Fall back to portable configuration
+
+    # ========================================================================
+    # PORTABLE ENVIRONMENT SETUP
+    # ========================================================================
+
+    # Set default editor
+    export EDITOR=vim
+    export VISUAL=vim
+
+    # Add local bin to PATH if not already present
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
+
+    # ========================================================================
+    # HISTORY
+    # ========================================================================
+
+    # Increase history size
+    HISTSIZE=10000
+    HISTFILESIZE=20000
+
+    # Append to history file instead of overwriting
+    shopt -s histappend
+
+    # Save history after each command
+    PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
+    # ========================================================================
+    # SHELL OPTIONS
+    # ========================================================================
+
+    # Enable extended globbing
+    shopt -s extglob
+
+    # Check window size after each command
+    shopt -s checkwinsize
+
+    # ========================================================================
+    # COLORS & PROMPT
+    # ========================================================================
+
+    # Enable color support in commands
+    if [ -x /usr/bin/dircolors ]; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    fi
+
+    # Color definitions for prompt
+    RED='\[\033[0;31m\]'
+    GREEN='\[\033[0;32m\]'
+    YELLOW='\[\033[0;33m\]'
+    BLUE='\[\033[0;34m\]'
+    BOLD='\[\033[1m\]'
+    RESET='\[\033[0m\]'
+
+    # Simple colored prompt (customize as desired)
+    PS1="${BOLD}${GREEN}\u${RESET}@${BOLD}${BLUE}\h${RESET}:${BOLD}${YELLOW}\w${RESET}\$ "
+
+    # ========================================================================
+    # PORTABLE ALIASES
+    # ========================================================================
+
+    # Convenience aliases
+    alias py='python'
+    alias py3='python3'
+    alias ll='ls -lhA --color=auto'
+    alias la='ls -A --color=auto'
+    alias l='ls -CF --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+
+    # Directory shortcuts
+    alias cd-='cd -'
+    alias ..='cd ..'
+    alias ...='cd ../..'
+    alias ....='cd ../../..'
+
+    # Omarchy-style tool aliases
+    # Required tools for full functionality:
+    # - opencode -> alias c
+    # - claude-code -> alias cx
+    # - docker.io / docker-ce -> alias d
+    # - ruby-full + rails -> alias r
+    # - tmux -> alias t
+    # - fzf + bat -> alias ff / eff
+    # - tdl -> alias ic / ix / icx
+    alias c='opencode'
+    alias cx='printf "\033[2J\033[3J\033[H" && claude --permission-mode bypassPermissions'
+    alias d='docker'
+    alias r='rails'
+    alias t='tmux attach || tmux new -s Work'
+    alias decompress='tar -xzf'
+    alias ff='fzf --preview '\''bat --style=numbers --color=always {}'\'''
+    alias eff='$EDITOR "$(ff)"'
+    alias ic='tdl c'
+    alias ix='tdl cx'
+    alias icx='tdl c cx'
+
+    # Git aliases (if git is installed)
+    if command -v git &> /dev/null; then
+        alias gs='git status'
+        alias ga='git add'
+        alias gc='git commit'
+        alias gp='git push'
+        alias gl='git log --oneline'
+        alias gcm='git commit -m'
+        alias gcam='git commit -a -m'
+        alias gcad='git commit -a --amend'
+    fi
+
+    # ========================================================================
+    # OPTIONAL: ZOXIDE INTEGRATION (smarter cd with history)
+    # ========================================================================
+
+    if command -v zoxide &> /dev/null; then
+        eval "$(zoxide init bash)"
+        alias cd='z'
+    fi
+
+    # ========================================================================
+    # OPTIONAL: EZA INTEGRATION (modern ls replacement)
+    # ========================================================================
+
+    if command -v eza &> /dev/null; then
+        alias ls='eza -lh --group-directories-first'
+        alias lsa='ls -a'
+        alias lt='eza --tree --level=2 --long'
+        alias lta='lt -a'
+    fi
+
+fi
+
+# ============================================================================
+# PORTABLE FUNCTIONS (always loaded, regardless of omarchy)
+# ============================================================================
+
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$@" && cd "$_"
+}
+
+# Extract archives
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2) tar xjf "$1" ;;
+            *.tar.gz)  tar xzf "$1" ;;
+            *.bz2)     bunzip2 "$1" ;;
+            *.rar)     unrar x "$1" ;;
+            *.gz)      gunzip "$1" ;;
+            *.tar)     tar xf "$1" ;;
+            *.tbz2)    tar xjf "$1" ;;
+            *.tgz)     tar xzf "$1" ;;
+            *.zip)     unzip "$1" ;;
+            *.Z)       uncompress "$1" ;;
+            *.7z)      7z x "$1" ;;
+            *)         echo "I don't know how to extract '$1'..." ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+
+# ============================================================================
+# LOCAL CUSTOMIZATIONS (always loaded)
+# ============================================================================
+
+# Source local/machine-specific config if it exists
+if [ -f "$HOME/.bashrc.local" ]; then
+    source "$HOME/.bashrc.local"
+fi
+
+# TODO: Look into fixing these functions. Commented out for now
+# export OBSIDIAN_VAULT="$HOME/Obsidian"
+#
+# ob() {
+#   local file="${1:-.}"
+#   local rel
+#   rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
+#
+#   command obsidian open path="$rel" vault="Obsidian" newtab >/dev/null 2>&1 & disown
+# }
+#
+# ob_new_window() {
+#   local file="${1:-}"
+#   local rel
+#   rel=$(realpath --canonicalize-missing --relative-to="$OBSIDIAN_VAULT" "$file" 2>/dev/null) || rel="$file"
+#
+#   command obsidian command id="workspace:new-window" >/dev/null 2>&1
+#   sleep 0.12
+#   command obsidian open path="$rel" vault="Obsidian" >/dev/null 2>&1 & disown
+# }
