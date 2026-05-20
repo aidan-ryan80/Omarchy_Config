@@ -11,7 +11,7 @@
     "bluetooth",
     "network",
     "pulseaudio",
-    "custom/bat-mode",
+    // "custom/bat-mode",
     "cpu",
     "battery"
   ],
@@ -38,7 +38,10 @@
       "3": [],
       "4": [],
       "5": [],
-      "6": []
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": []
     }
   },
   "custom/omarchy": {
@@ -80,14 +83,14 @@
     "spacing": 1,
     "on-click": "omarchy-launch-wifi"
   },
-  "custom/bat-mode": {
-    "format": "{}",
-    "return-type": "json",
-    "exec": "~/.local/bin/waybar-bat-status",
-    "on-click": "~/.local/bin/toggle-bat-mode",
-    "interval": 5, // Checks every 5 seconds
-    "tooltip": true
-  },
+  // "custom/bat-mode": {
+  //   "format": "{}",
+  //   "return-type": "json",
+  //   "exec": "~/.local/bin/waybar-bat-status",
+  //   "on-click": "~/.local/bin/toggle-bat-mode",
+  //   "interval": 5,
+  //   "tooltip": true
+  // },
   "battery": {
     "format": "{capacity}% {icon}",
     "format-discharging": "{icon}",
