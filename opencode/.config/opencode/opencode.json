@@ -5,6 +5,7 @@
     "*": "ask",
     "task": "allow",
     "todowrite": "allow",
+    "skill": "allow",
     "external_directory": {
       "~/.agents/**": "allow"
     }
