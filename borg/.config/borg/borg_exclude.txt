@@ -16,3 +16,12 @@ sh:home/aidan/lost+found
 sh:home/aidan/.minecraft/runtime
 sh:home/aidan/.minecraft/libraries
 sh:home/aidan/.minecraft/versions
+sh:home/aidan/.windows
+sh:home/aidan/.vscode
+sh:home/aidan/.nuget
+sh:home/aidan/.m2
+sh:home/aidan/.steam/steamapps/compatdata
+sh:home/aidan/.steam/steamapps/shadercache
+sh:home/aidan/**/.venv
+sh:home/aidan/Unity/Hub
+sh:home/aidan/Projects/Unity/*/Library

@@ -2,3 +2,6 @@
 .git-credentials
 .ssh/
 *history
+
+# Borg auto-generated cache
+borg/.config/borg/security/

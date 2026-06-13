@@ -1,21 +1,41 @@
 #!/bin/bash
-# Will exit immediately if a command fails
 set -e
 
-export BORG_PASSPHRASE="REDACTED"
+export BORG_PASSCOMMAND='cat /root/.borg-passphrase'
 
-# Helper function to print sizes:
+HOSTNAME=$(hostname)
+
+case "$HOSTNAME" in
+    Acer-PHN16-omarchy)
+        MIRROR_DIR="@mirror-acer"
+        BORG_REPO="/mnt/backup/@borg"
+        BORG_PREFIX="acer"
+        ;;
+    Ideapad-omarchy)
+        MIRROR_DIR="@mirror-ideapad"
+        BORG_REPO="/mnt/backup/@borg"
+        BORG_PREFIX="ideapad"
+        ;;
+    *)
+        echo "Unknown hostname: $HOSTNAME. Aborting."
+        exit 1
+        ;;
+esac
+
 print_storage_report() {
     echo "--- Storage Report: $1 ---"
     echo "Overall SSD Usage:"
-    df -h /mnt/backup  2>/dev/null || echo "No backup data found."
+    df -h /mnt/backup 2>/dev/null || echo "No backup data found."
 
-    echo "Subvolume Sizes:"
-    du -sh /mnt/backup/@mirror /mnt/backup/@borg 2>/dev/null || echo "No backup data found."
+    echo "--- Paths (Machine: $HOSTNAME) ---"
+    echo "Mirror: /mnt/backup/$MIRROR_DIR"
+    echo "Borg repo: $BORG_REPO"
+    echo "Borg prefix: $BORG_PREFIX"
+    sudo du -sh "/mnt/backup/$MIRROR_DIR" "$BORG_REPO" 2>/dev/null || echo "No backup data found."
 
-    if [ -d "/mnt/backup/@borg" ]; then
+    if [ -d "$BORG_REPO" ]; then
         echo "Borg Repository Details:"
-        borg info /mnt/backup/@borg
+        sudo BORG_PASSCOMMAND="$BORG_PASSCOMMAND" borg info "$BORG_REPO"
     fi
     echo "---------------------------------"
 }
@@ -28,40 +48,35 @@ cleanup() {
 trap cleanup EXIT
 
 echo "--- Starting Backup: $(date) ---"
+echo "Host: $HOSTNAME"
 
-# 1. Mounting the drive by Label
-# Making sure the drive exists with mkdir -p
 mkdir -p /mnt/backup
 sudo mount -L BACKUPS /mnt/backup
 
-# 2. Pre-Backup Report
 print_storage_report "Pre-Backup"
 
-# 3. Run Rsync Mirror
 echo "Running Rsync..."
-# Should I use --exclude-if-present .nobackup instead?
-rsync -avAXH --delete --exclude-from="/home/aidan/.config/rsync/exclude.txt" /home/aidan/ /mnt/backup/@mirror/
+sudo rsync -avAXH --delete \
+    --exclude-from="/home/aidan/.config/rsync/exclude.txt" \
+    /home/aidan/ "/mnt/backup/$MIRROR_DIR/"
 
-# 4. Run Borg Backup
 echo "Running Borg..."
-borg create --stats --compression zstd,3 \
+sudo BORG_PASSCOMMAND="$BORG_PASSCOMMAND" borg create --stats --compression zstd,3 \
     --exclude-from /home/aidan/.config/borg/borg_exclude.txt \
-    /mnt/backup/@borg::"home-{now:%Y-%m-%d_%H:%M}" \
+    "$BORG_REPO::${BORG_PREFIX}-home-{now:%Y-%m-%d_%H:%M}" \
     /home/aidan
 
-# 5. Post-Backup Report
 print_storage_report "Post-Backup"
 
-# 6. Prune Old Backups
 echo "Pruning old backups..."
-borg prune -v --list /mnt/backup/@borg \
+sudo BORG_PASSCOMMAND="$BORG_PASSCOMMAND" borg prune -v --list "$BORG_REPO" \
+    --glob-archives "${BORG_PREFIX}-*" \
     --keep-daily=7 \
     --keep-weekly=4 \
     --keep-monthly=6 \
     --keep-yearly=2
 
-# Reclaiming Space
 echo "Compacting repository..."
-borg compact /mnt/backup/@borg
+sudo BORG_PASSCOMMAND="$BORG_PASSCOMMAND" borg compact "$BORG_REPO"
 
 echo "--- Backup Completed: $(date) ---"

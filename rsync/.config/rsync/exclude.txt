@@ -17,3 +17,12 @@ lost+found/
 .npm/
 .ollama/
 .copilot/
+.windows/
+/.vscode/
+.nuget/
+.m2/
+.steam/steamapps/compatdata/
+.steam/steamapps/shadercache/
+.venv/
+/Unity/Hub/
+Projects/Unity/*/Library/
