@@ -55,17 +55,24 @@ Both slots are M.2 PCIe Gen4. The factory Windows SSD has a corrupted BCD from a
 
 ## Connectivity
 
-| Port/Slot | Type |
-|-----------|------|
-| USB-C | 2x (USB4 40 Gbps + Thunderbolt 4, DP over USB-C, PD 100W) |
-| USB-A | 3x (USB 3.2 Gen2) |
-| HDMI | 2.1 |
-| Ethernet | 2.5 Gb (Killer E3100G) |
-| Wi-Fi | Intel Arrow Lake PCH CNVi (Wi-Fi 7) |
-| Bluetooth | 5.3/5.4 |
-| Audio | 3.5mm combo jack |
-| Card Reader | microSD |
-| DC-in | Barrel plug (245W/330W adapter) |
+| Port/Slot | Type | GPU Routing |
+|-----------|------|-------------|
+| USB-C (TB4) | USB4 40 Gbps + Thunderbolt 4, DP over USB-C, PD 100W | **iGPU** (Intel Arrow Lake) — via TB4 controller |
+| USB-C (DP) | USB 3.2 Gen2 10 Gbps, DP over USB-C, PD 100W | **iGPU** (Intel Arrow Lake) |
+| USB-A | 3x USB 3.2 Gen2 | N/A |
+| HDMI | 2.1 | **dGPU** (NVIDIA RTX 5070) — per Notebookcheck review, not documented in Acer manuals |
+| Ethernet | 2.5 Gb (Killer E3100G) | N/A |
+| Wi-Fi | Intel Arrow Lake PCH CNVi (Wi-Fi 7) | N/A |
+| Bluetooth | 5.3/5.4 | N/A |
+| Audio | 3.5mm combo jack | N/A |
+| Card Reader | microSD | N/A |
+| DC-in | Barrel plug (245W/330W adapter) | N/A |
+
+**GPU Routing Summary:**
+- **HDMI 2.1** → directly connected to NVIDIA RTX 5070 dGPU. Only port confirmed to route through dGPU.
+- **Both USB-C ports** → route through Intel Arrow Lake iGPU. TB4 controller and USB-C DP Alt Mode are integrated into the CPU package.
+- **Internal display** → switchable between iGPU and dGPU via MUX switch / Advanced Optimus (controlled through PredatorSense).
+- Acer's official documentation **does not mention** GPU routing. dGPU-to-HDMI routing is from third-party hardware reviews.
 
 ## Power & Battery
 
@@ -83,6 +90,16 @@ Both slots are M.2 PCIe Gen4. The factory Windows SSD has a corrupted BCD from a
 | Width | 356.78 mm |
 | Depth | 275.5 mm |
 | Height | 26.75 mm (rear, tapers forward) |
+
+## Built-in Peripherals
+
+| Device | Model |
+|--------|-------|
+| Webcam | ACER FHD User Facing (Quanta) |
+| Touchpad | HID I2C (2808:0352) |
+| Keyboard | AT Translated Set 2 (HID I2C or PS/2, switchable in BIOS) |
+| Hotkeys | Acer WMI + Intel HID events |
+| Lid switch | Present |
 
 ## BIOS
 
