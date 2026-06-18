@@ -1,8 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": false,
+  "instructions": ["AGENTS.md"],
   "permission": {
     "*": "ask",
+    "read": "allow",
     "task": "allow",
     "todowrite": "allow",
     "skill": "allow",
