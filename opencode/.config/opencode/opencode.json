@@ -11,5 +11,37 @@
     "external_directory": {
       "~/.agents/**": "allow"
     }
+  },
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen2.5-coder:7b-ctx20k": {
+          "name": "Qwen 2.5 Coder 7B",
+          "limit": {
+            "context": 20480,
+            "output": 8192
+          }
+        },
+        "qwen2.5:7b-ctx20k": {
+          "name": "Qwen 2.5 7B (general)",
+          "limit": {
+            "context": 20480,
+            "output": 8192
+          }
+        },
+        "qwen3:8b-ctx16k": {
+          "name": "Qwen3 8B (general)",
+          "limit": {
+            "context": 16384,
+            "output": 8192
+          }
+        }
+      }
+    }
   }
 }

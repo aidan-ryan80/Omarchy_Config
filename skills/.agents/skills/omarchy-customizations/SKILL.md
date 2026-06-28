@@ -4,6 +4,8 @@ description: >
   Documents all user customizations to the Omarchy system, stored in
   ~/Dotfiles. Covers shell, Hyprland, network, backup, and security
   configurations. Use when asked about system setup, configs, or tools.
+  Always load when creating or editing skill files under ~/.agents/skills/
+  to reference the stow-based skill management pattern.
 ---
 
 # Omarchy Customizations
