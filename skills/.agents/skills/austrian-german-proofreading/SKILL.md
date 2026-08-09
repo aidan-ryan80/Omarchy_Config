@@ -23,6 +23,10 @@ When proofreading, always show:
 2. An English translation
 3. A table of notable changes (optional for short texts)
 
+The corrected German text and its English translation may contain German, but all
+commentary, explanations, and the change table must be written in English (matching
+the AGENTS.md communication preference: German only for the corrected draft itself).
+
 ## General language rules
 
 - Substantive großschreiben (nouns capitalised)
