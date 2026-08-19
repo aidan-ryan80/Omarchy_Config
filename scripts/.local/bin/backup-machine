@@ -57,12 +57,12 @@ print_storage_report "Pre-Backup"
 
 echo "Running Rsync..."
 sudo rsync -avAXH --delete \
-    --exclude-from="/home/aidan/.config/rsync/exclude.txt" \
+    --exclude-from="/home/aidan/Dotfiles/rsync/.config/rsync/exclude.txt" \
     /home/aidan/ "/mnt/backup/$MIRROR_DIR/"
 
 echo "Running Borg..."
 sudo BORG_PASSCOMMAND="$BORG_PASSCOMMAND" borg create --stats --compression zstd,3 \
-    --exclude-from /home/aidan/.config/borg/borg_exclude.txt \
+    --exclude-from /home/aidan/Dotfiles/borg/.config/borg/borg_exclude.txt \
     "$BORG_REPO::${BORG_PREFIX}-home-{now:%Y-%m-%d_%H:%M}" \
     /home/aidan
 
