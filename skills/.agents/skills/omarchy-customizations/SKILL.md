@@ -32,62 +32,78 @@ Only customized/edited files go into `~/Dotfiles`. Default/unchanged files stay 
 
 ## Window Manager (`~/Dotfiles/hypr/.config/hypr/`)
 
-### Monitors (`monitors.conf`)
+Config is Lua-based since the Quattro migration (2026-08). Customized files live in
+Dotfiles as `*.lua` and are stowed into `~/.config/hypr/`. The legacy `*.conf`
+files (monitors.conf, bindings.conf, input.conf, envs.conf, looknfeel.conf,
+autostart.conf, hyprland.conf, hypridle.conf, hyprlock.conf,
+new_external_monitor.conf) are inert and were removed.
+
+`hyprsunset.conf` and `xdph.conf` are **stock defaults** (identical to
+`/usr/share/omarchy/config/hypr/`), so they stay as plain local files and are NOT
+in Dotfiles.
+
+### Monitors (`monitors.lua`)
 - **3 displays**: HP E240c (left) | Acer B246HL (center) | Laptop 2560×1600@240 (right)
 - Laptop at scale 1.60, externals at scale 1.0
 - **Persistent workspaces**: 1,4,7 on laptop | 2,5,8 on Acer | 3,6,9 on HP
 - Laptop model-agnostic config (works for Acer PHN16-73 and Legion 7i)
+- **Gotcha**: do not add a catch-all `hl.monitor({ output = "", ... })` rule — in the
+  Lua API the last matching rule wins, so a catch-all overrides the laptop's
+  scale-1.6 rule. Omit it and let Hyprland's built-in fallback handle unknown monitors.
 
-### Keybindings (`bindings.conf`)
-Heavily customized. All `Super+Shift+<key>` launches:
+### Keybindings (`bindings.lua`)
+Custom overrides on top of Omarchy defaults. Omitted combos use the Quattro
+defaults (which match the previous `bindings.conf` unless noted):
 
-| Binding | App |
-|---------|-----|
-| `Super+Return` | Terminal |
-| `Super+Alt+Return` | Tmux terminal |
-| `Super+Shift+Return/B` | Browser |
-| `Super+Shift+Alt+B` | Private browser |
-| `Super+Shift+M` | Spotify |
-| `Super+Shift+N` | opencode (editor/agent) |
-| `Super+Shift+D` | lazydocker |
-| `Super+Shift+O` | Obsidian |
-| `Super+Shift+W` | Typora |
-| `Super+Shift+/` | 1Password |
-| `Super+Shift+A` | ChatGPT (webapp) |
-| `Super+Shift+Alt+A` | Grok (webapp) |
-| `Super+Shift+Y` | YouTube (webapp) |
-| `Super+Shift+Ctrl+G` | Google Messages (webapp) |
-| `Super+Shift+P` | Google Photos (webapp) |
-| `Super+Shift+X` | X/Twitter (webapp) |
-| `Super+Shift+C` | Google Calendar (webapp) |
-| `Super+Shift+E` | Gmail (webapp) |
-| `Super+Shift+T` | Teams (webapp) |
-| `Super+Shift+Alt+D` | Discord (webapp) |
-| `Super+Alt+Shift+F` | Nautilus file manager |
-| `Super+Shift+G` | WhatsApp (webapp) |
-| `Super+Shift+Alt+G` | Signal (webapp) |
-| `Super+F` | Full-width (fullscreen 1) |
-| `Super+Shift+F` | Full-screen (fullscreen 0) |
+| Binding | App | Notes |
+|---------|-----|-------|
+| `Super+Return` | Terminal | default |
+| `Super+Alt+Return` | Tmux terminal | default |
+| `Super+Shift+Return/B` | Browser | default |
+| `Super+Shift+Alt+B` | Private browser | default |
+| `Super+Shift+M` | Spotify | default |
+| `Super+Shift+N` | Editor (opencode) | default |
+| `Super+Shift+D` | lazydocker | default |
+| `Super+Shift+O` | Obsidian | default |
+| `Super+Shift+W` | Omawrite | Quattro default (replaced Typora) |
+| `Super+Shift+/` | 1Password | default |
+| `Super+Shift+A` | ChatGPT (webapp) | default |
+| `Super+Shift+Alt+A` | Grok (webapp) | default |
+| `Super+Shift+Y` | YouTube (webapp) | default |
+| `Super+Shift+Ctrl+G` | Google Messages (webapp) | default |
+| `Super+Shift+P` | Google Photos (webapp) | default |
+| `Super+Shift+X` | X/Twitter (webapp) | default |
+| `Super+Shift+C` | Google Calendar (webapp) | **override** (default: HEY) |
+| `Super+Shift+E` | Gmail (webapp) | **override** (default: HEY) |
+| `Super+Shift+T` | Teams (webapp) | **custom** |
+| `Super+Shift+Alt+D` | Discord (webapp) | **custom** |
+| `Super+Alt+Shift+F` | Nautilus file manager | default |
+| `Super+Alt+F` | Nautilus file manager | **override** (default: full width) |
+| `Super+Ctrl+Alt+Shift+F` | File manager (cwd) | **custom** |
+| `Super+Shift+G` | WhatsApp (webapp) | **override** (Quattro default: Signal) |
+| `Super+Shift+Alt+G` | Signal | **override** (Quattro default: WhatsApp) |
+| `Super+F` | Full width | **override** (default: full screen) |
+| `Super+Shift+F` | Full screen | **override** (default: file manager) |
 
-### Environment (`envs.conf`)
-NVIDIA Wayland optimizations:
-- `NVD_BACKEND=direct`
-- `LIBVA_DRIVER_NAME=nvidia`
-- `__GLX_VENDOR_LIBRARY_NAME=nvidia`
+### Environment
+NVIDIA Wayland optimizations (`NVD_BACKEND=direct`, `LIBVA_DRIVER_NAME=nvidia`,
+`__GLX_VENDOR_LIBRARY_NAME=nvidia`) are set automatically by Omarchy's default
+`nvidia.lua` when an NVIDIA GPU is detected. No `envs.lua` override is needed —
+the old `envs.conf` was redundant and removed.
 
-### Idle (`hypridle.conf`)
-- 2.5m: screensaver
-- 5m: lock (via `loginctl lock-session`)
-- 5.5m: keyboard backlight off + DPMS display off
+### Idle & Lock
+Handled by the Omarchy shell (`~/.config/omarchy/shell.json`): idle lock at 300s.
+Legacy `hypridle.conf` / `hyprlock.conf` were replaced in Quattro and removed.
 
-### Blue Light (`hyprsunset.conf`)
-- Identity profile (no tint), starts at 07:00
+### Blue Light
+Stock default `hyprsunset.conf` (no customization): identity profile (no tint) at
+07:00. Night light toggled at runtime via `omarchy toggle nightlight`.
 
-### Input (`input.conf`)
-- US layout, Caps Lock as compose
-- Repeat rate 40, delay 250ms
-- Numlock on by default
-- Touchpad: clickfinger behavior, scroll factor 0.4
+### Input (`input.lua`)
+- US layout, Caps Lock as compose (default)
+- `numlock_by_default = false` (start with numlock off; Quattro default is on)
+- Repeat rate 40, delay 250ms (defaults)
+- Touchpad: clickfinger behavior, scroll factor 0.4 (defaults)
 
 ## Terminal (`~/Dotfiles/ghostty/.config/ghostty/config`)
 
