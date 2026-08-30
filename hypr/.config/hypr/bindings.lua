@@ -54,4 +54,3 @@ o.bind("SUPER + ALT + F", "File manager", { omarchy = "nautilus" })
 -- Custom app bindings with no Quattro default.
 o.bind("SUPER + SHIFT + T", "Teams", { webapp = "https://teams.cloud.microsoft/" })
 o.bind("SUPER + SHIFT + ALT + D", "Discord", { webapp = "https://discord.com/channels/@me" })
-o.bind("SUPER + CTRL + ALT + SHIFT + F", "File manager (cwd)", { omarchy = "nautilus-cwd" })
