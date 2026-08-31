@@ -4,7 +4,6 @@
   "instructions": ["AGENTS.md"],
   "permission": {
     "*": "ask",
-    "read": "allow",
     "task": "allow",
     "todowrite": "allow",
     "skill": "allow",
