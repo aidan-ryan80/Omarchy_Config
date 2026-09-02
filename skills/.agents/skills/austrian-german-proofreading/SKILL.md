@@ -66,14 +66,18 @@ to standard German:
 - "also" as filler → "daher/deshalb" in formal writing
 - Genitiv von "Automat": "des Automaten" (nicht "Automats")
 
-## Dash style
+## Punctuation style: do not use dashes
 
-Do not use em-dashes (—) or en-dashes (-) as sentence punctuation. If a
-sentence naturally calls for a dash, rephrase it to flow without one. A comma,
-a semicolon, a colon, or a full stop is almost always cleaner. Normal hyphens
-joining compound words (e.g. "well-known", "state-of-the-art") are fine; this
-rule is about dashes used as punctuation only. Never replace an em-dash with
-a normal hyphen — restructure instead.
+Do not use em-dashes (—), en-dashes (–), or hyphens (–) as sentence or list
+punctuation. If a sentence naturally calls for a dash, rephrase it to flow
+without one. A comma, a semicolon, a colon, or a full stop is almost always
+cleaner.
+
+- **List separators:** Use a colon (:) after numbers/item labels instead of a
+  dash, e.g. "1. Item:" not "1. Item –".
+- Normal hyphens joining compound words (e.g. "well-known", "state-of-the-art")
+  are fine; this rule is about dashes used as punctuation/separators only.
+- Never replace an em-dash with a normal hyphen; restructure instead.
 
 ## Review checklist
 
@@ -87,4 +91,5 @@ a normal hyphen — restructure instead.
 8. English translation provided?
 9. **Am I correcting Austrian German → standard German unnecessarily?**
    (If the original uses correct Austrian, leave it.)
-10. No em-dashes or en-dashes used as punctuation? Rephrase instead.
+10. No em-dashes, en-dashes, or hyphens used as punctuation or list
+    separators? Use colons or rephrase instead.
